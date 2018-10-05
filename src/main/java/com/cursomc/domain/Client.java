@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.cursomc.constants.ClientType;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Client {
@@ -24,6 +25,7 @@ public class Client {
 	private String name;
 	private Integer clientType;
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy = "client")
 	private List<Address> addresses = new ArrayList<>();
 	
