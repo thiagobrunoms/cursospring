@@ -1,9 +1,13 @@
 package com.cursomc.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Categoria {
@@ -12,6 +16,9 @@ public class Categoria {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
+	
+	@ManyToMany(mappedBy="categories")
+	private List<Produto> products = new ArrayList<>();
 	
 	public Categoria() {}
 	
@@ -35,6 +42,16 @@ public class Categoria {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	
+
+	public List<Produto> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<Produto> products) {
+		this.products = products;
 	}
 
 	@Override
