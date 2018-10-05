@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -24,7 +25,7 @@ public class Produto {
 	
 	@ManyToMany 
 	@JoinTable(name="PRODUCT_CATEGORY", joinColumns = @JoinColumn(name="product_id"), inverseJoinColumns=@JoinColumn(name="category_id"))
-	@JsonIgnore
+	@JsonBackReference
 	private List<Categoria> categories = new ArrayList<>();
 	
 	public Produto() {}
