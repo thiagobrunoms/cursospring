@@ -5,11 +5,15 @@ import java.util.Date;
 import javax.persistence.Entity;
 
 import com.cursomc.constants.PaymentStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class TicketPayment extends Payment {
 	
+	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date deadlineDate;
+	
+	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date paymentDate;
 	
 	public TicketPayment() {}

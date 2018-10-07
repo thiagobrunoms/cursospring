@@ -12,6 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "Client_Orders")
 public class Order {
@@ -19,11 +22,15 @@ public class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date date;
 	
+	@JsonManagedReference
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "order")
 	private Payment payment;
 	
+	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name = "cliend_id")
 	private Client client;
