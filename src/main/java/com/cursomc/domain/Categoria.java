@@ -21,7 +21,7 @@ public class Categoria {
 	
 	@JsonManagedReference
 	@ManyToMany(mappedBy="categories")
-	private List<Produto> products = new ArrayList<>();
+	private List<Product> products = new ArrayList<>();
 	
 	public Categoria() {}
 	
@@ -49,11 +49,11 @@ public class Categoria {
 	
 	
 
-	public List<Produto> getProducts() {
+	public List<Product> getProducts() {
 		return products;
 	}
 
-	public void setProducts(List<Produto> products) {
+	public void setProducts(List<Product> products) {
 		this.products = products;
 	}
 

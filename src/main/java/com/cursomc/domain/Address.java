@@ -29,7 +29,7 @@ public class Address {
 	@JoinColumn(name = "client_id")
 	private Client client;
 	
-	public Address() {}
+	public Address() {}	
 	
 	public Address(Integer id, String name, Integer number, String district, String cep, City city, Client client) {
 		super();

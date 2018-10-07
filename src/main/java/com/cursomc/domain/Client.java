@@ -32,6 +32,9 @@ public class Client {
 	@ElementCollection
 	@CollectionTable(name = "TELEFONE")
 	private Set<String> contactNumbers = new HashSet<>();
+	
+	@OneToMany(mappedBy = "client")
+	private List<Order> orders= new ArrayList<>();
 
 	public Client() {}
 	
@@ -85,5 +88,46 @@ public class Client {
 	public void setClientType(Integer clientType) {
 		this.clientType = clientType;
 	}
+
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((Id == null) ? 0 : Id.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Client other = (Client) obj;
+		if (Id == null) {
+			if (other.Id != null)
+				return false;
+		} else if (!Id.equals(other.Id))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
+	
+	
 
 }

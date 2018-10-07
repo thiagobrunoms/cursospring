@@ -1,5 +1,6 @@
 package com.cursomc;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 
@@ -9,16 +10,23 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.cursomc.constants.ClientType;
+import com.cursomc.constants.PaymentStatus;
 import com.cursomc.domain.Address;
 import com.cursomc.domain.Categoria;
 import com.cursomc.domain.City;
 import com.cursomc.domain.Client;
-import com.cursomc.domain.Produto;
+import com.cursomc.domain.CreditCardPayment;
+import com.cursomc.domain.Order;
+import com.cursomc.domain.Payment;
+import com.cursomc.domain.Product;
 import com.cursomc.domain.State;
+import com.cursomc.domain.TicketPayment;
 import com.cursomc.repositories.AddressRepository;
 import com.cursomc.repositories.CategoriaRepository;
 import com.cursomc.repositories.CityRepository;
 import com.cursomc.repositories.ClientRepository;
+import com.cursomc.repositories.OrderRepository;
+import com.cursomc.repositories.PaymentRepository;
 import com.cursomc.repositories.ProductRepository;
 import com.cursomc.repositories.StateRepository;
 
@@ -35,6 +43,10 @@ public class CursomcApplication implements CommandLineRunner {
 	private AddressRepository addressRepository;
 	@Autowired
 	private ClientRepository clientRepository;	
+	@Autowired
+	private PaymentRepository paymentRepository;
+	@Autowired
+	private OrderRepository orderRepository;
 
 	
 	@Autowired
@@ -49,10 +61,10 @@ public class CursomcApplication implements CommandLineRunner {
 		Categoria cat1 = new Categoria(null, "Informática");
 		Categoria cat2 = new Categoria(null, "Eletrodoméstico");
 		
-		Produto prod1 = new Produto(null, "Computador", 2000.00);
-		Produto prod2 = new Produto(null, "Mouse", 30.40);
-		Produto prod3 = new Produto(null, "Processador", 1230.34);
-		Produto prod4 = new Produto(null, "Geladeira", 2345.34);
+		Product prod1 = new Product(null, "Computador", 2000.00);
+		Product prod2 = new Product(null, "Mouse", 30.40);
+		Product prod3 = new Product(null, "Processador", 1230.34);
+		Product prod4 = new Product(null, "Geladeira", 2345.34);
 		
 		cat1.getProducts().addAll(Arrays.asList(prod1, prod2, prod3));
 		cat2.getProducts().addAll(Arrays.asList(prod4));
@@ -97,6 +109,23 @@ public class CursomcApplication implements CommandLineRunner {
 		addressRepository.saveAll(Arrays.asList(address1));
 		addressRepository.saveAll(Arrays.asList(address2));
 		addressRepository.saveAll(Arrays.asList(address3));
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		
+		Order ped1 = new Order(null, sdf.parse("30/09/2017 10:32"), client1, address1);
+		Order ped2 = new Order(null, sdf.parse("10/10/2017 19:35"), client2, address3);
+		
+		Payment pagto1 = new CreditCardPayment(null, PaymentStatus.PAID, ped1, 6);
+		ped1.setPayment(pagto1);
+		
+		Payment pagto2 = new TicketPayment(null, PaymentStatus.PENDING, ped2, sdf.parse("20/10/2017 00:00"), null);
+		ped2.setPayment(pagto2);
+		
+		client1.getOrders().addAll(Arrays.asList(ped1));
+		client2.getOrders().addAll(Arrays.asList(ped2));
+				
+		orderRepository.saveAll(Arrays.asList(ped1, ped2));
+		paymentRepository.saveAll(Arrays.asList(pagto1, pagto2));
 		
 	}
 }

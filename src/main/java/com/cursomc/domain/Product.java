@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Produto {
+public class Product {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,9 +28,9 @@ public class Produto {
 	@JsonBackReference
 	private List<Categoria> categories = new ArrayList<>();
 	
-	public Produto() {}
+	public Product() {}
 	
-	public Produto(Integer id, String name, Double value) {
+	public Product(Integer id, String name, Double value) {
 		super();
 		this.id = id;
 		this.name = name;
