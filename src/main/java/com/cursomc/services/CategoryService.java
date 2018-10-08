@@ -11,7 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.cursomc.domain.Category;
-import com.cursomc.exceptions.DeleteException;
+import com.cursomc.exceptions.IntegrityException;
 import com.cursomc.exceptions.ObjectNotFoundException;
 import com.cursomc.repositories.CategoriaRepository;
 
@@ -44,7 +44,7 @@ public class CategoryService {
 		try {
 			repository.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DeleteException("Não é permitido deletar categorias as quais possuem produtos associados!");
+			throw new IntegrityException("Não é permitido deletar categorias as quais possuem produtos associados!");
 		}	
 	}
 	
