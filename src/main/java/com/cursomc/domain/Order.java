@@ -26,11 +26,9 @@ public class Order {
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date date;
 	
-	@JsonManagedReference
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "order")
 	private Payment payment;
 	
-	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name = "cliend_id")
 	private Client client;

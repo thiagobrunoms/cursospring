@@ -21,7 +21,7 @@ public class ClientResource {
 	public ResponseEntity<?> find(@PathVariable Integer id) {
 		Client client = service.find(id);
 		
-		return ResponseEntity.ok(client);
+		return ResponseEntity.ok().body(client);
 	}
 
 }

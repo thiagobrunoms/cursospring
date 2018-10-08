@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.cursomc.constants.ClientType;
 import com.cursomc.constants.PaymentStatus;
 import com.cursomc.domain.Address;
-import com.cursomc.domain.Categoria;
+import com.cursomc.domain.Category;
 import com.cursomc.domain.City;
 import com.cursomc.domain.Client;
 import com.cursomc.domain.CreditCardPayment;
@@ -58,8 +58,8 @@ public class CursomcApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Categoria cat1 = new Categoria(null, "Informática");
-		Categoria cat2 = new Categoria(null, "Eletrodoméstico");
+		Category cat1 = new Category(null, "Informática");
+		Category cat2 = new Category(null, "Eletrodoméstico");
 		
 		Product prod1 = new Product(null, "Computador", 2000.00);
 		Product prod2 = new Product(null, "Mouse", 30.40);

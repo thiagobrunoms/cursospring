@@ -26,7 +26,7 @@ public class Product {
 	@ManyToMany 
 	@JoinTable(name="PRODUCT_CATEGORY", joinColumns = @JoinColumn(name="product_id"), inverseJoinColumns=@JoinColumn(name="category_id"))
 	@JsonBackReference
-	private List<Categoria> categories = new ArrayList<>();
+	private List<Category> categories = new ArrayList<>();
 	
 	public Product() {}
 	
@@ -54,10 +54,10 @@ public class Product {
 	public void setValue(Double value) {
 		this.value = value;
 	}
-	public List<Categoria> getCategories() {
+	public List<Category> getCategories() {
 		return categories;
 	}
-	public void setCategories(List<Categoria> categories) {
+	public void setCategories(List<Category> categories) {
 		this.categories = categories;
 	}
 	
