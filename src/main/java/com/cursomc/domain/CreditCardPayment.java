@@ -3,8 +3,10 @@ package com.cursomc.domain;
 import javax.persistence.Entity;
 
 import com.cursomc.constants.PaymentStatus;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @Entity
+@JsonTypeName("creditCardPayment")
 public class CreditCardPayment extends Payment {
 	
 	private Integer instalments;

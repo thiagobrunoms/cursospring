@@ -1,6 +1,7 @@
 package com.cursomc;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import com.cursomc.domain.City;
 import com.cursomc.domain.Client;
 import com.cursomc.domain.CreditCardPayment;
 import com.cursomc.domain.Order;
+import com.cursomc.domain.OrderedItem;
 import com.cursomc.domain.Payment;
 import com.cursomc.domain.Product;
 import com.cursomc.domain.State;
@@ -26,6 +28,7 @@ import com.cursomc.repositories.CategoriaRepository;
 import com.cursomc.repositories.CityRepository;
 import com.cursomc.repositories.ClientRepository;
 import com.cursomc.repositories.OrderRepository;
+import com.cursomc.repositories.OrderedItemRepository;
 import com.cursomc.repositories.PaymentRepository;
 import com.cursomc.repositories.ProductRepository;
 import com.cursomc.repositories.StateRepository;
@@ -47,6 +50,8 @@ public class CursomcApplication implements CommandLineRunner {
 	private PaymentRepository paymentRepository;
 	@Autowired
 	private OrderRepository orderRepository;
+	@Autowired
+	private OrderedItemRepository orderedItemRepository;
 
 	
 	@Autowired
@@ -96,10 +101,10 @@ public class CursomcApplication implements CommandLineRunner {
 		stateRepository.saveAll(Arrays.asList(state1, state2));
 		cityRepository.saveAll(Arrays.asList(city1, city2, city3));
 		
-		Client client1 = new Client(null, "Thiago de Sales", ClientType.F_PERSON);
+		Client client1 = new Client(null, "Thiago de Sales", "thiagobrunoms@gmail.com", ClientType.F_PERSON);
 		client1.getContactNumbers().addAll(Arrays.asList("82999431690", "8233262884"));
 		
-		Client client2 = new Client(null, "Míryan Soares", ClientType.F_PERSON);
+		Client client2 = new Client(null, "Míryan Soares", "miryansoaresrocha@gmail.com", ClientType.F_PERSON);
 		client2.getContactNumbers().addAll(Arrays.asList("82999328297"));
 		
 		Address address1 = new Address(null, "Rua TX", 3, "Massa", "43343343", city2, client1);
@@ -133,5 +138,18 @@ public class CursomcApplication implements CommandLineRunner {
 		orderRepository.saveAll(Arrays.asList(ped1, ped2));
 		paymentRepository.saveAll(Arrays.asList(pagto1, pagto2));
 		
+		OrderedItem oi1 = new OrderedItem(ped1, prod1, 0.00, 1, 2000.00);
+		OrderedItem oi2 = new OrderedItem(ped1, prod3, 0.00, 2, 80.00);
+		OrderedItem oi3 = new OrderedItem(ped2, prod2, 100.00, 1, 800.00);
+		
+		ped1.getItems().addAll(Arrays.asList(oi1, oi2));
+		ped2.getItems().addAll(Arrays.asList(oi3));
+		
+		prod1.getItems().addAll(Arrays.asList(oi1));
+		prod2.getItems().addAll(Arrays.asList(oi3));
+		prod3.getItems().addAll(Arrays.asList(oi2));
+		
+		
+		orderedItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3));
 	}
 }

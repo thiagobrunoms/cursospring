@@ -5,13 +5,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 import com.cursomc.constants.ClientType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -23,11 +27,14 @@ public class Client {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer Id;
+	private Integer id;
+	
+	@NotEmpty(message = "Nome não pode ser vazio!")
 	private String name;
 	private Integer clientType;
 	
-	@OneToMany(mappedBy = "client")
+	//No caso do cascade.all, ira refletir a deleção de um cliente, removendo todos os enderecos.
+	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
 	private List<Address> addresses = new ArrayList<>();
 	
 	@ElementCollection
@@ -37,22 +44,29 @@ public class Client {
 	@JsonIgnore
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders= new ArrayList<>();
+	
+	@NotEmpty(message = "Email não pode ser vazio")
+	@Email(message = "Email inválido!")
+	@Column(unique=true)
+	private String email;
 
 	public Client() {}
 	
-	public Client(Integer id, String name, ClientType clientType) {
+	public Client(Integer id, String name, String email, ClientType clientType) {
 		super();
-		Id = id;
+		this.id = id;
 		this.name = name;
+		this.email = email;
 		this.clientType = clientType.getType();
+		
 	}
 
 	public Integer getId() {
-		return Id;
+		return id;
 	}
 
 	public void setId(Integer id) {
-		Id = id;
+		this.id = id;
 	}
 
 	public String getName() {
@@ -61,6 +75,16 @@ public class Client {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public ClientType getClientType() throws Exception {
@@ -87,10 +111,6 @@ public class Client {
 		this.contactNumbers = contactNumbers;
 	}
 
-	public void setClientType(Integer clientType) {
-		this.clientType = clientType;
-	}
-
 	public List<Order> getOrders() {
 		return orders;
 	}
@@ -103,7 +123,7 @@ public class Client {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((Id == null) ? 0 : Id.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
@@ -117,10 +137,10 @@ public class Client {
 		if (getClass() != obj.getClass())
 			return false;
 		Client other = (Client) obj;
-		if (Id == null) {
-			if (other.Id != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!Id.equals(other.Id))
+		} else if (!id.equals(other.id))
 			return false;
 		if (name == null) {
 			if (other.name != null)
@@ -129,6 +149,14 @@ public class Client {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "Client [Id=" + id + ", name=" + name + ", clientType=" + clientType + ", addresses=" + addresses
+				+ ", contactNumbers=" + contactNumbers + ", orders=" + orders + ", email=" + email + "]";
+	}
+	
+	
 	
 	
 

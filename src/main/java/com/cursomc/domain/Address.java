@@ -84,6 +84,12 @@ public class Address {
 	public void setClient(Client client) {
 		this.client = client;
 	}
+
+	@Override
+	public String toString() {
+		return "Address [id=" + id + ", name=" + name + ", number=" + number + ", district=" + district + ", cep=" + cep
+				+ ", city=" + city + ", client=" + client + "]";
+	}
 	
 	
 	

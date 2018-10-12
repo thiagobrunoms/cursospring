@@ -37,5 +37,13 @@ public class ResourceExceptionHandler {
 
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 	}
+	
+	@ExceptionHandler(UserAlreadyExistException.class)
+	public ResponseEntity<StandardError> fireValidationException(UserAlreadyExistException exception, HttpServletRequest request) {
+		StandardError error = new StandardError(HttpStatus.CONFLICT.value(), exception.getMessage(), System.currentTimeMillis());
+
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+	}
+	
 
 }

@@ -32,6 +32,7 @@ public class CategoryService {
 		return repository.save(category);
 	}
 	
+	//TODO deve-se obter o objeto do banco
 	public Category updateCategory(Category category) {
 		findCategoryById(category.getId());
 		
@@ -39,7 +40,7 @@ public class CategoryService {
 	}
 	
 	public void deleteCategory(Integer id) {
-		findCategoryById(id);
+		findCategoryById(id); //dispara exceção caso não exista categoria
 		
 		try {
 			repository.deleteById(id);

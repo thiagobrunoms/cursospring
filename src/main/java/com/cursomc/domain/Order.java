@@ -1,6 +1,8 @@
 package com.cursomc.domain;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -9,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -30,12 +33,15 @@ public class Order {
 	private Payment payment;
 	
 	@ManyToOne
-	@JoinColumn(name = "cliend_id")
+	@JoinColumn(name = "client_id")
 	private Client client;
 	
 	@ManyToOne
 	@JoinColumn(name = "delivery_address_id")
 	private Address deliveryAddress;
+	
+	@OneToMany(mappedBy = "id.order")
+	private Set<OrderedItem> items = new HashSet<>();
 	
 	public Order() {}
 
@@ -45,6 +51,17 @@ public class Order {
 		this.date = date;
 		this.client = client;
 		this.deliveryAddress = deliveryAddress;
+	}
+	
+	//colocando get, o resultado desse metodo será serializado
+	public double getTotalValue() {
+		double total = 0.0;
+		
+		for(OrderedItem item : items) {
+			total = total + item.getSubTotal();
+		}
+		
+		return total;
 	}
 
 	public Integer getId() {
@@ -86,6 +103,14 @@ public class Order {
 	public void setDeliveryAddress(Address deliveryAddress) {
 		this.deliveryAddress = deliveryAddress;
 	}
+	
+	public Set<OrderedItem> getItems() {
+		return items;
+	}
+
+	public void setItems(Set<OrderedItem> items) {
+		this.items = items;
+	}
 
 	@Override
 	public int hashCode() {
@@ -111,8 +136,5 @@ public class Order {
 			return false;
 		return true;
 	}
-	
-	
-	
 
 }
