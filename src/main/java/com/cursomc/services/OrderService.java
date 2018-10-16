@@ -80,7 +80,7 @@ public class OrderService {
 			System.out.println(item.getProduct());
 		}
 		orderedItemsRepository.saveAll(order.getItems());
-		
+		System.out.println(order);
 		return order;
 		
 	}

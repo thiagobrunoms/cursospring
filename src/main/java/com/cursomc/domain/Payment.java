@@ -94,6 +94,15 @@ public abstract class Payment {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Payment [status=");
+		builder.append(getStatus());
+		builder.append("]");
+		return builder.toString();
+	}
 	
 	
 	

@@ -1,7 +1,10 @@
 package com.cursomc.domain;
 
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -137,4 +140,31 @@ public class Order {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+		StringBuilder builder = new StringBuilder();
+		builder.append("Order [id=");
+		builder.append(id);
+		builder.append(", Client=");
+		builder.append(client.getName());
+		builder.append(", date=");
+		builder.append(sdf.format(date));
+		builder.append(", payment=");
+		builder.append(payment);
+		builder.append("\nItems=");
+		
+		for(OrderedItem eachItem : items) {
+			builder.append(eachItem);
+		}
+		
+		builder.append("\nTotal Value= ");
+		builder.append(nf.format(getTotalValue()));
+		
+		return builder.toString();
+	}
+
+	
+	
 }

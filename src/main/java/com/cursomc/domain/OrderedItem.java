@@ -1,6 +1,8 @@
 package com.cursomc.domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -106,6 +108,26 @@ public class OrderedItem implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		StringBuilder builder = new StringBuilder();
+		builder.append("OrderedItem [id=");
+		builder.append(id);
+		builder.append("Product: ");
+		builder.append(getProduct().getName());
+		builder.append(", discount=");
+		builder.append(discount);
+		builder.append(", quantity=");
+		builder.append(quantity);
+		builder.append(", unit price=");
+		builder.append(price);
+		builder.append(" subtotal = ");
+		builder.append(nf.format(getSubTotal()));
+		builder.append("]\n");
+		return builder.toString();
 	}
 	
 	
