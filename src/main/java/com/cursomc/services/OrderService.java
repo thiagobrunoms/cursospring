@@ -82,7 +82,8 @@ public class OrderService {
 		}
 		
 		orderedItemsRepository.saveAll(order.getItems());
-		emailService.sendOrderConfirmationMail(order);
+//		emailService.sendOrderConfirmationMail(order);
+		emailService.sendOrderConfirmationHtmlEmail(order);
 		return order;
 	}
 	

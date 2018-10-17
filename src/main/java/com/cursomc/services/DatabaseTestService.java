@@ -93,7 +93,7 @@ public class DatabaseTestService {
 		stateRepository.saveAll(Arrays.asList(state1, state2));
 		cityRepository.saveAll(Arrays.asList(city1, city2, city3));
 		
-		Client client1 = new Client(null, "Thiago de Sales", "thiagobrunoms@gmail.com", ClientType.F_PERSON);
+		Client client1 = new Client(null, "Thiago de Sales", "thiago.sales@arapiraca.ufal.br", ClientType.F_PERSON);
 		client1.getContactNumbers().addAll(Arrays.asList("82999431690", "8233262884"));
 		
 		Client client2 = new Client(null, "Míryan Soares", "miryansoaresrocha@gmail.com", ClientType.F_PERSON);
