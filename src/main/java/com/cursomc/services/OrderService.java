@@ -36,6 +36,12 @@ public class OrderService {
 	@Autowired
 	private OrderedItemRepository orderedItemsRepository;
 	
+	@Autowired
+	private ClientService clientService;
+	
+	@Autowired
+	private EmailService emailService;
+	
 	public Order find(Integer id) {
 		Optional<Order> order = repository.findById(id);
 		
@@ -54,6 +60,7 @@ public class OrderService {
 		order.setDate(new Date());
 		order.getPayment().setStatus(PaymentStatus.PENDING);
 		order.getPayment().setOrder(order);
+		order.setClient(clientService.find(order.getClient().getId()));
 		
 		if (order.getPayment() instanceof TicketPayment) {
 			TicketPayment tp = (TicketPayment) order.getPayment();
@@ -69,20 +76,14 @@ public class OrderService {
 		for(OrderedItem item : order.getItems()) {
 			item.setDiscount(0.0);
 			Product product = productRepository.findById(item.getProduct().getId()).get();
-			System.out.println("Recuperou produto: " + product);
 			item.setProduct(product);
 			item.setPrice(product.getValue()); //TODO Mudar para productService para tratar inexistências etc.
 			item.setOrder(order);
 		}
 		
-		System.out.println("Vai salvar items...");
-		for(OrderedItem item : order.getItems()) {
-			System.out.println(item.getProduct());
-		}
 		orderedItemsRepository.saveAll(order.getItems());
-		System.out.println(order);
+		emailService.sendOrderConfirmationMail(order);
 		return order;
-		
 	}
 	
 }
