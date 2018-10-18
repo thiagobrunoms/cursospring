@@ -1,6 +1,7 @@
 package com.cursomc.domain;
 
 import java.util.ArrayList;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,9 +21,7 @@ import javax.validation.constraints.NotEmpty;
 
 import com.cursomc.constants.ClientType;
 import com.cursomc.constants.UserProfile;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Client {
@@ -71,6 +70,7 @@ public class Client {
 		this.email = email;
 		this.clientType = clientType.getType();
 		this.password = password;
+		addProfile(UserProfile.CLIENT); //Nesse caso, todo usuario é um client
 	}
 
 	public Integer getId() {

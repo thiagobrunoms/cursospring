@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.cursomc.constants.ClientType;
 import com.cursomc.constants.PaymentStatus;
+import com.cursomc.constants.UserProfile;
 import com.cursomc.domain.Address;
 import com.cursomc.domain.Category;
 import com.cursomc.domain.City;
@@ -98,6 +99,7 @@ public class DatabaseTestService {
 		
 		Client client1 = new Client(null, "Thiago de Sales", "thiago.sales@arapiraca.ufal.br", ClientType.F_PERSON, passEncoder.encode("233454"));
 		client1.getContactNumbers().addAll(Arrays.asList("82999431690", "8233262884"));
+		client1.addProfile(UserProfile.ADMIN);
 		
 		Client client2 = new Client(null, "Míryan Soares", "miryansoaresrocha@gmail.com", ClientType.F_PERSON, passEncoder.encode("544332"));
 		client2.getContactNumbers().addAll(Arrays.asList("82999328297"));
