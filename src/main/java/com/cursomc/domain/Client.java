@@ -10,6 +10,7 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,6 +19,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 import com.cursomc.constants.ClientType;
+import com.cursomc.constants.UserProfile;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -41,6 +43,10 @@ public class Client {
 	@CollectionTable(name = "TELEFONE")
 	private Set<String> contactNumbers = new HashSet<>();
 	
+	@ElementCollection(fetch = FetchType.EAGER) //EAGER faz com que essa colecao seja buscada quando client for buscado no banco
+	@CollectionTable(name = "PROFILE")
+	private Set<Integer> profiles = new HashSet<>();
+	
 	@JsonIgnore
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders= new ArrayList<>();
@@ -49,16 +55,22 @@ public class Client {
 	@Email(message = "Email inválido!")
 	@Column(unique=true)
 	private String email;
-
-	public Client() {}
 	
-	public Client(Integer id, String name, String email, ClientType clientType) {
+	@NotEmpty
+	@JsonIgnore
+	private String password;
+
+	public Client() {
+		addProfile(UserProfile.ADMIN);
+	}
+	
+	public Client(Integer id, String name, String email, ClientType clientType, String password) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.clientType = clientType.getType();
-		
+		this.password = password;
 	}
 
 	public Integer getId() {
@@ -117,6 +129,27 @@ public class Client {
 
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public Set<UserProfile> getProfiles() throws Exception {
+		Set<UserProfile> userProfiles = new HashSet<>();
+		
+		for (Integer profileId : profiles) {
+			userProfiles.add(UserProfile.toEnum(profileId));
+		}
+		return userProfiles;
+	}
+
+	public void addProfile(UserProfile profile) {
+		this.profiles.add(profile.getType());
 	}
 
 	@Override

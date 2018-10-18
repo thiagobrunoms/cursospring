@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.cursomc.domain.Address;
@@ -22,6 +23,9 @@ public class ClientService {
 	@Autowired
 	private ClientRepository repository;
 	
+	@Autowired
+	private BCryptPasswordEncoder passEncoder;
+	
 	@Autowired AddressRepository addressRepository;
 	
 	public Client find(Integer id) {
@@ -35,7 +39,7 @@ public class ClientService {
 		if (repository.findByEmail(client.getEmail()) != null)
 			throw new UserAlreadyExistException("Usuario com email " + client.getEmail() + " já existente!");
 			
-		
+		client.setPassword(passEncoder.encode(client.getPassword()));
 		client = repository.save(client);
 		
 		//TODO E se não existirem enderecos?

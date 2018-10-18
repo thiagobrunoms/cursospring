@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.cursomc.constants.ClientType;
@@ -49,6 +50,8 @@ public class DatabaseTestService {
 	private OrderRepository orderRepository;
 	@Autowired
 	private OrderedItemRepository orderedItemRepository;
+	@Autowired
+	private BCryptPasswordEncoder passEncoder;
 
 	
 	@Autowired
@@ -93,10 +96,10 @@ public class DatabaseTestService {
 		stateRepository.saveAll(Arrays.asList(state1, state2));
 		cityRepository.saveAll(Arrays.asList(city1, city2, city3));
 		
-		Client client1 = new Client(null, "Thiago de Sales", "thiago.sales@arapiraca.ufal.br", ClientType.F_PERSON);
+		Client client1 = new Client(null, "Thiago de Sales", "thiago.sales@arapiraca.ufal.br", ClientType.F_PERSON, passEncoder.encode("233454"));
 		client1.getContactNumbers().addAll(Arrays.asList("82999431690", "8233262884"));
 		
-		Client client2 = new Client(null, "Míryan Soares", "miryansoaresrocha@gmail.com", ClientType.F_PERSON);
+		Client client2 = new Client(null, "Míryan Soares", "miryansoaresrocha@gmail.com", ClientType.F_PERSON, passEncoder.encode("544332"));
 		client2.getContactNumbers().addAll(Arrays.asList("82999328297"));
 		
 		Address address1 = new Address(null, "Rua TX", 3, "Massa", "43343343", city2, client1);
