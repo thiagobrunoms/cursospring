@@ -29,7 +29,7 @@ public enum UserProfile {
 		this.name = name;
 	}
 	
-	public static UserProfile toEnum(Integer type) throws Exception {
+	public static UserProfile toEnum(Integer type) {
 		if (type == null) return null;
 		
 		for (UserProfile clientType : UserProfile.values()) {
@@ -37,7 +37,7 @@ public enum UserProfile {
 				return clientType;
 		}
 		
-		throw new Exception("ClientType does not exist!");
+		return null;
 	}
 	
 

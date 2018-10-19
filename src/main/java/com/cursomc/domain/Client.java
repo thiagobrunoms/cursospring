@@ -139,7 +139,7 @@ public class Client {
 		this.password = password;
 	}
 	
-	public Set<UserProfile> getProfiles() throws Exception {
+	public Set<UserProfile> getProfiles() {
 		Set<UserProfile> userProfiles = new HashSet<>();
 		
 		for (Integer profileId : profiles) {

@@ -2,6 +2,7 @@ package com.cursomc.resources;
 
 import java.net.URI;
 
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.cursomc.domain.Client;
-import com.cursomc.dtos.ClientDTO;
 import com.cursomc.services.ClientService;
 
 @RestController
